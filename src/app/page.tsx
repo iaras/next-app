@@ -1,5 +1,22 @@
 import Image from "next/image";
+import {Button} from "../components/Button";
+import { PrismaClient, Auctions } from "@prisma/client";
 
+const prisma = new PrismaClient()
+//export async function db () {
+//  const auction = await prisma.auctions.findFirst()
+//  console.log(auction)
+//  return {props:{auction}}
+//}
+//db()
+//  .then(async () => {
+//    await prisma.$disconnect()
+//  })
+//  .catch(async (e) => {
+//    console.error(e)
+//    await prisma.$disconnect()
+//    process.exit(1)
+//  })
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -108,6 +125,8 @@ export default function Home() {
           </p>
         </a>
       </div>
+      <Button/>
+      { auction }
     </main>
   );
 }
