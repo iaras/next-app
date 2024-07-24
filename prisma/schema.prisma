@@ -13,17 +13,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Auctions {
-  auction_id                  Int      @id @default(autoincrement())
-  auction_date                DateTime
-  auction_site_id             Int
-  auction_count               Int
-  auction_name                String   @db.VarChar(255)
-  exhibition_start_expiration DateTime
-  exhibition_end_expiration   DateTime
-  auction_fulltext_feild      String   @db.VarChar(512)
-  created_at                  DateTime @default(now())
-  updated_at                  DateTime @updatedAt
-  delete_flg                  Int      @default(0)
-  open_flg                    Int      @default(3)
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
 }
