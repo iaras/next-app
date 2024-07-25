@@ -1,18 +1,25 @@
 import { NextResponse } from 'next/server';
-import { serialize } from 'cookie';
+import { PrismaClient } from '@prisma/client';
+import { cookies } from 'next/headers';
 
-export async function POST(request: Request) {
-  // Clear the session cookie
-  const cookie = serialize('session', '', {
+const prisma = new PrismaClient();
+
+export async function POST() {
+  const sessionToken = cookies().get('session_token')?.value;
+
+  if (sessionToken) {
+    await prisma.session.delete({
+      where: { token: sessionToken },
+    });
+  }
+
+  const response = NextResponse.json({ success: true });
+  response.cookies.set('session_token', '', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
     expires: new Date(0),
-    path: '/',
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production',
   });
-
-  const response = NextResponse.json({ message: 'Logged out successfully' }, { status: 200 });
-  response.headers.set('Set-Cookie', cookie);
 
   return response;
 }

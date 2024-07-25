@@ -1,46 +1,38 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import { serialize } from 'cookie';
+//import { serialize } from 'cookie';
+import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient();
 
 export async function POST(request: Request) {
-  try {
-    const { username, password } = await request.json();
+  const { username, password } = await request.json();
 
-    const user = await prisma.user.findUnique({
-      where: { username },
-    });
+  const user = await prisma.user.findUnique({ where: { username } });
 
-    if (!user) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
-    }
-
-    // Create a session (in a real app, you'd want to use a more secure method)
-    const session = btoa(JSON.stringify({ userId: user.id, username: user.username }));
-
-    // Set the session in a cookie
-    const cookie = serialize('session', session, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 3600, // 1 hour
-      path: '/',
-    });
-
-    const response = NextResponse.json({ message: 'Login successful' }, { status: 200 });
-    response.headers.set('Set-Cookie', cookie);
-
-    return response;
-  } catch (error) {
-    console.error('Login error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  if (!user || !await bcrypt.compare(password, user.password)) {
+    return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
   }
+
+  const token = uuidv4();
+  const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 1 week from now
+
+  await prisma.session.create({
+    data: {
+      token,
+      userId: user.id,
+      expires,
+    },
+  });
+
+  const response = NextResponse.json({ success: true });
+  response.cookies.set('session_token', token, {
+    httpOnly: true,
+    expires,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production',
+  });
+
+  return response;
 }
