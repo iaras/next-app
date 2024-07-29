@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Gallery from '../components/Gallery';
 
 export default function Home() {
   const [username, setUsername] = useState('');
@@ -62,13 +63,16 @@ export default function Home() {
   //  </div>
   //);
   return (
-    <div className="flex flex-col items-center justify-center w-full">
-      <h1 className="text-4xl font-bold mb-6">
-        Welcome to the Dashboard
-      </h1>
-      <p className="text-xl mb-8">
-        Hello, {username}! This is your personal dashboard.
-      </p>
+    //<div className="flex flex-col items-center justify-center w-full">
+    //  <h1 className="text-4xl font-bold mb-6">
+    //    Welcome to the Dashboard
+    //  </h1>
+    //  <p className="text-xl mb-8">
+    //    Hello, {username}! This is your personal dashboard.
+    //  </p>
+    //</div>
+    <div className="min-h-screen bg-gray-100">
+    <Gallery />
     </div>
   );
 }

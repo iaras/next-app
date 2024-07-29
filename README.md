@@ -5,13 +5,13 @@
 
 --------------------------------
 
-✔ Would you like to use TypeScript with this project? … No / **Yes**
-✔ Would you like to use ESLint with this project? … No / **Yes**
-✔ Would you like to use Tailwind CSS with this project? … No / **Yes**
-✔ Would you like to use `src/` directory with this project? … No / **Yes**
-✔ Use App Router (recommended)? … No / **Yes**
-✔ Would you like to customize the default import alias? … **No** / Yes
-✔ What import alias would you like configured? … @/*
+✔ Would you like to use TypeScript with this project? … No / **Yes**  
+✔ Would you like to use ESLint with this project? … No / **Yes**  
+✔ Would you like to use Tailwind CSS with this project? … No / **Yes**  
+✔ Would you like to use `src/` directory with this project? … No / **Yes**  
+✔ Use App Router (recommended)? … No / **Yes**  
+✔ Would you like to customize the default import alias? … **No** / Yes  
+✔ What import alias would you like configured? … @/*  
 
 -----------------------------------
 
@@ -75,3 +75,7 @@ Login
     npm install cookie --save-dev
     npm install @types/cookie
     ```
+
+## Images
+  - AWS S3
+    * S3のオブジェクトのメタデータに"category"と"tags"を付与。これでフィルタをかけられるようにしている。
