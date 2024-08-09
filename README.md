@@ -30,14 +30,26 @@ npx next dev (-p 5000)
 src/
 ├── app
 │   ├── api
-│   │   └── route.ts // apiエンドポイント
-│   ├── components
-│   │   ├── XXX.tsx
-│   │   └── XXX.tsx
-│   ├── page.tsx // ルート
+│   │   ├── login  
+│   │   │   └── route.ts // apiエンドポイント
+│   │   ├── logout
+│   │   ├── register
+│   │   └── user
 │   │
-│   ├── xxxxx
-│   │   └── page.tsx //各ページ 
+│   ├── page.tsx // ルート
+│   ├── layout.tsx
+│   ├── globals.css
+│   │
+│   ├── login // ログインページ
+│   │   └── page.tsx 
+│   └── register // 登録ページ
+│   
+├── components   
+│       ├── Filter.tsx
+│       ├── Gallery.tsx
+│       ├── Header.tsx
+│       ├── Layout.tsx
+│       └── Lightbox.tsx
 │       
 ├── styles // CSS
 │   ├── components // コンポーネント用の .module.scss
@@ -49,6 +61,11 @@ src/
 │   │    
 │   ├── global.scss // グローバル(アプリ全体)で読み込ませたいスタイル
 │   └── valiables.scss // scss変数用
+│
+├── utils
+│   ├── s3Client.ts
+│   ├── s3Utils.ts
+│   └── session.ts
 │
 └── middleware.ts
 ```
@@ -70,10 +87,10 @@ ORM : [Prisma](https://prisma.io)
 Login
   - cookie/bcrypt
     ```bash
-    npm install bcrypt --save-dev
-    npm install @types/bcrypt
-    npm install cookie --save-dev
-    npm install @types/cookie
+    npm install bcrypt @types/bcrypt --save-dev
+    npm install cookie @types/cookie --save-dev
+    npm install uuid
+    npm install multiparty @types/multiparty --save-dev
     ```
 
 ## Images

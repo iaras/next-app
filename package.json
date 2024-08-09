@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
@@ -20,6 +20,8 @@
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie": "^0.6.0",
+    "@types/formidable": "^3.4.5",
+    "@types/multiparty": "^0.0.36",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -28,6 +30,8 @@
     "cookie": "^0.6.0",
     "eslint": "^8",
     "eslint-config-next": "^14.2.4",
+    "formidable": "^3.5.1",
+    "multiparty": "^4.2.3",
     "postcss": "^8",
     "prisma": "^5.15.0",
     "sass": "^1.77.4",

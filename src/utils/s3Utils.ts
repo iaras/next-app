@@ -11,7 +11,7 @@ export interface S3Image {
 
 export async function getImagesFromS3(): Promise<S3Image[]> {
   const command = new ListObjectsV2Command({
-    Bucket: process.env.S3_BUCKET_NAME,
+    Bucket: process.env.AWS_S3_BUCKET_NAME,
   });
 
   try {
@@ -22,14 +22,14 @@ export async function getImagesFromS3(): Promise<S3Image[]> {
       for (const object of data.Contents) {
         if (object.Key) {
           const getObjectCommand = new GetObjectCommand({
-            Bucket: process.env.S3_BUCKET_NAME,
+            Bucket: process.env.AWS_S3_BUCKET_NAME,
             Key: object.Key,
           });
           const url = await getSignedUrl(s3Client, getObjectCommand, { expiresIn: 3600 });
 
           // メタデータを取得
           const headObjectCommand = new HeadObjectCommand({
-            Bucket: process.env.S3_BUCKET_NAME,
+            Bucket: process.env.AWS_S3_BUCKET_NAME,
             Key: object.Key,
           });
           const headObject = await s3Client.send(headObjectCommand);
